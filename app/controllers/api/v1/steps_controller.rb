@@ -22,7 +22,7 @@ class Api::V1::StepsController < ApplicationController
     def update
         @step = Step.new(step_params)
         if @step.save
-            render json: @step
+            render json: @step, status: :created, location: @step
         else
             render @step.errors
         end

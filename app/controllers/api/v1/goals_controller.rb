@@ -9,7 +9,7 @@ class Api::V1::GoalsController < ApplicationController
     def create
         @goal = Goal.new(goal_params)
         if @goal.save
-            render json: @goal
+            render json: @goal, status: :created, location: @goal
         else
             render @goal.errors
         end
@@ -35,7 +35,7 @@ class Api::V1::GoalsController < ApplicationController
     private
 
     def goal_params
-        params.require(:goal).permit(:name, :completion_date, :completion_percent)
+        params.require(:goal).permit(:name, :completion_date).merge({completion_percent: 0.0})
     end
 
     def set_goal
